@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>データ送信フォーム</title>
+    </head>
+    <body>
+        <body>
+            <h1>データ送信フォーム</h1>
+            <p>クラス一覧.csvをアップロードしてください</p>
+            
+            <input id='$inputFile' type='file' />
+            <div>
+              <textarea id='$input' rows='8' cols='64'></textarea>
+            </div>
+            <a id='$btn' class='btn' download='sample.txt'>入力した内容を保存</a>
+          
+            <script>
+                window.onload = function() {
+                // ダウンロードボタンを押した際のイベントを登録
+                $btn.onclick = () => {
+                    // blob オブジェクトを生成
+                    var content = $input.value;
+                    var blob = new Blob([content], { type: 'text/plain' });
+                    
+                    // download の href に object url を設定
+                    $btn.href = window.URL.createObjectURL(blob);
+                };
+                
+                $inputFile.onchange = async (e) => {
+                    // ファイルオブジェクトを取得
+                    var file = e.currentTarget.files[0];
+                    if (!file) return ;
+                    
+                    // 中身を取得
+                    var text = await fetchAsText(file);
+                    
+                    // テキストエリアに代入
+                    $input.value = text;
+                };
+                };
+
+                // ファイルから内容をテキストとして取得する Promise を返す
+                var fetchAsText = (file) => {
+                return new Promise((resolve) => {
+                    var fr = new FileReader();
+                    fr.onload = (e) => {
+                    // 読み込んだ結果を resolve する
+                    resolve(e.currentTarget.result);
+                    };
+                    // 読み込む
+                    fr.readAsText(file);
+                });
+                };
+            </script>
+          </body>
+    </body>
+</html>
