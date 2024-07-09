@@ -16,8 +16,8 @@
     <py-script>
         import csv
         import json
-        from js import document
-        from pyodide.ffi import create_proxy
+        from js import document, FileReader
+        from pyodide.ffi import create_proxy, to_js
         
         def csv_to_json(fileinput, json_file_path_new):
             # CSVファイルを読み込む
