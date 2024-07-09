@@ -21,7 +21,7 @@
         
         def csv_to_json(fileinput, json_file_path_new):
             # CSVファイルを読み込む
-            csv_reader = csv.DictReader(inputfile, delimiter=',')   
+            csv_reader = csv.DictReader(fileinput, delimiter=',')   
             json_data = json.dumps([row for row in csv_reader], indent=1, ensure_ascii=False)
 
             conversion_dict = {'現代の':'現国',
