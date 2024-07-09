@@ -2,12 +2,14 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <title>csvデータアップロード</title>
   </head>
   <body>
-    <h1>CSV to JSON Converter</h1>
+    <h1>CSV to JSON</h1>
+    <p>クラス一覧.csvをアップロードしてください</p>
     <input type="file" id="csvFileInput" accept=".csv">
     <button id="runbutton">アップロード</button>
     <div id="output" />
@@ -99,9 +101,11 @@
             
             csv_to_json(fileinput, json_file_path)
             json_edit(json_file_path, json_file_path_new)
-        
+      
+        run_python_function_proxy = create_proxy(run_python_function)
+
         run_button = document.getElementById('runbutton')
-        run_button.addEventListener('click', run_python_function)
+        run_button.addEventListener('click', run_python_function_proxy)
     </py-script>
   </body>
 </html>
