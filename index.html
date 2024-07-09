@@ -15,17 +15,11 @@
         import json
         from js import document
         
-        def csv_to_json(fileinput, json_file_path):
+        def csv_to_json(fileinput, json_file_path_new):
             # CSVファイルを読み込む
+            csv_reader = csv.DictReader(inputfile, delimiter=',')   
+            json_data = json.dumps([row for row in csv_reader], indent=1, ensure_ascii=False)
 
-            csv_reader = csv.DictReader(inputfile, delimiter=',')
-                
-                # JSONファイルに書き込む
-                with open(json_file_path, 'w', encoding='utf-8') as json_file:
-                    json_data = json.dumps([row for row in csv_reader], indent=1, ensure_ascii=False)
-                    json_file.write(json_data)
-        
-        def json_edit(json_file_path,json_file_path_new): #表記揺れ対応
             conversion_dict = {'現代の':'現国',
                                '言語文':'言文',
                                '論理国':'論国',
@@ -82,28 +76,24 @@
                                 'ﾃﾞｲﾍ':'DDI',
                                 'ＬＨＲ':'LHR'
             }
-            with open(json_file_path) as f:
-                old_f = json.load(f)
         
-            for i in range(len(old_f)):
-               for j in range(len(old_f[1]['null'])):
+            for i in range(len(json_data)):
+               for j in range(len(json_data[1]['null'])):
                     for k in conversion_dict:
-                        if k in old_f[i]['null'][j]:
-                            old_f[i]['null'][j] = ' '+conversion_dict[k]
+                        if k in json_data[i]['null'][j]:
+                            json_data[i]['null'][j] = ' '+conversion_dict[k]
                             break
             
             
             with open(json_file_path_new, 'w', encoding='utf-8') as json_file:
-                    json_data = json.dumps(old_f, indent=1,ensure_ascii=False)
-                    json_file.write(json_data)
+                    json_data_new = json.dumps(json_data, indent=1,ensure_ascii=False)
+                    json_file.write(json_data_new)
             
             output_div = document.getElementById('output')
-            output_div.innerText = json_data
-
+            output_div.innerText = json_data_new
+            
         def run_python_function(event):
             fileinput = document.getElementById('csvFileInput');
-      
-            json_file_path = 'schedule_data.json' # 出力するJSONファイルのパス
             json_file_path_new = 'schedule_data_new.json'
             
             csv_to_json(fileinput, json_file_path)
