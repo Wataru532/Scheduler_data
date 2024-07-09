@@ -1,58 +1,116 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>データ送信フォーム</title>
-    </head>
-    <body>
-        <body>
-            <h1>データ送信フォーム</h1>
-            <p>クラス一覧.csvをアップロードしてください</p>
-            
-            <input id='$inputFile' type='file' />
-            <div>
-              <textarea id='$input' rows='8' cols='64'></textarea>
-            </div>
-            <a id='$btn' class='btn' download='sample.txt'>入力した内容を保存</a>
-          
-            <script>
-                window.onload = function() {
-                // ダウンロードボタンを押した際のイベントを登録
-                $btn.onclick = () => {
-                    // blob オブジェクトを生成
-                    var content = $input.value;
-                    var blob = new Blob([content], { type: 'text/plain' });
-                    
-                    // download の href に object url を設定
-                    $btn.href = window.URL.createObjectURL(blob);
-                };
-                
-                $inputFile.onchange = async (e) => {
-                    // ファイルオブジェクトを取得
-                    var file = e.currentTarget.files[0];
-                    if (!file) return ;
-                    
-                    // 中身を取得
-                    var text = await fetchAsText(file);
-                    
-                    // テキストエリアに代入
-                    $input.value = text;
-                };
-                };
+<html lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+  <body>
+    <h1>CSV to JSON Converter</h1>
+    <input type="file" id="csvFileInput" accept=".csv">
+    <button id="runbutton">Convert CSV to JSON</button>
+    <div id="output" />
+    <py-script>
+        import csv
+        import json
+        from js import document
+        
+        def csv_to_json(fileinput, json_file_path):
+            # CSVファイルを読み込む
 
-                // ファイルから内容をテキストとして取得する Promise を返す
-                var fetchAsText = (file) => {
-                return new Promise((resolve) => {
-                    var fr = new FileReader();
-                    fr.onload = (e) => {
-                    // 読み込んだ結果を resolve する
-                    resolve(e.currentTarget.result);
-                    };
-                    // 読み込む
-                    fr.readAsText(file);
-                });
-                };
-            </script>
-          </body>
-    </body>
+            csv_reader = csv.DictReader(inputfile, delimiter=',')
+                
+                # JSONファイルに書き込む
+                with open(json_file_path, 'w', encoding='utf-8') as json_file:
+                    json_data = json.dumps([row for row in csv_reader], indent=1, ensure_ascii=False)
+                    json_file.write(json_data)
+        
+        def json_edit(json_file_path,json_file_path_new): #表記揺れ対応
+            conversion_dict = {'現代の':'現国',
+                               '言語文':'言文',
+                               '論理国':'論国',
+                               '古典':'古典',
+                                '実数A':'実数A',
+                                '実数B':'実数B',
+                                '理数E':'理数E',
+                                '数学Ⅰ':'数Ⅰ',
+                                '数ⅠⅡ':'数Ⅰ',
+                                '数学Ａ':'数A',
+                                '数Ａ':'数A',
+                                '理数Ⅱα':'理数Ⅱα',
+                                '理数Ⅱβ':'理数Ⅱβ',
+                                '理数Ⅱ':'理数Ⅱ',
+                                '理数数':'理数Ⅰ',
+                                '数学Ⅲ':'数Ⅲ',
+                                '数学Ⅱ':'数Ⅱ',
+                                '数学Ｂ':'数B',
+                                '応数':'応数',
+                                'EW':'EW',
+                                'ｴｯｾｲ':'EW',
+                                '論理':'論表',
+                                '論表':'論表',
+                                '英語コ':'EC',
+                                'EC':'EC',
+                                'CⅢ':'EC',
+                                '総合英':'総英',
+                                '日地':'日地',
+                                '地歴':'地歴β',
+                                '世政経':'世政経',
+                                '歴史':'歴史',
+                                '地理':'地理',
+                                '世界史':'世史',
+                                '物理基':'物基',
+                                '生物基':'生基',
+                                '化学基':'化基',
+                                '理物生':'理物生',
+                                '物生':'物生',
+                                '理化':'理化',
+                                '理数物':'理物',
+                                '理数生':'理生',
+                                '理数化':'理化',
+                                '化':'化学',
+                                '自然科':'自科',
+                                '情報':'情報Ⅰ',
+                                '体':'体',
+                                '保健':'保',
+                                '家庭基':'家',
+                                '芸':'芸',
+                                '理数探究':'理数探究',
+                                '国際探究':'国際探究',
+                                '総合':'総合',
+                                '公共':'公共',
+                                'ﾃﾞｲﾍ':'DDI',
+                                'ＬＨＲ':'LHR'
+            }
+            with open(json_file_path) as f:
+                old_f = json.load(f)
+        
+            for i in range(len(old_f)):
+               for j in range(len(old_f[1]['null'])):
+                    for k in conversion_dict:
+                        if k in old_f[i]['null'][j]:
+                            old_f[i]['null'][j] = ' '+conversion_dict[k]
+                            break
+            
+            
+            with open(json_file_path_new, 'w', encoding='utf-8') as json_file:
+                    json_data = json.dumps(old_f, indent=1,ensure_ascii=False)
+                    json_file.write(json_data)
+            
+            output_div = document.getElementById('output')
+            output_div.innerText = json_data
+
+        def run_python_function(event):
+            fileinput = document.getElementById('csvFileInput');
+      
+            json_file_path = 'schedule_data.json' # 出力するJSONファイルのパス
+            json_file_path_new = 'schedule_data_new.json'
+            
+            csv_to_json(fileinput, json_file_path)
+            json_edit(json_file_path, json_file_path_new)
+        
+        run_button = document.getElementById('runbutton')
+        run_button.addEventListener('click', run_python_function)
+    </py-script>
+  </body>
 </html>
