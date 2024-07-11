@@ -217,8 +217,10 @@
               return response.json();
             })
             .then(function(data) {
-              const jsonData = data;
-              console.log(jsonData);
+                const jsonData = data;
+                const key1 = 99999999999959;
+                const key = jsonData["key"] / key1;
+                console.log(key);
             })
         }
     </script>
