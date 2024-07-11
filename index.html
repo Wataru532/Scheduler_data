@@ -63,7 +63,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script charset="utf-8">
-        //unzip();
+        const token = unzip();
         document.getElementById('csvFile').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -176,8 +176,8 @@
             const repo = 'Scheduler_data'; //your-repo-name
             const owner = 'Wataru532'; //your-github-username
             const branch = 'main';
-            const token = unzip(); //your-personal-access-token
             const filePath = 'scheduler_data.json';
+            console.log(token);
 
             const reader = new FileReader();
             reader.onload = async function(event) {
@@ -233,7 +233,6 @@
                     n_c_letter = parseInt(c_letter,10);
                     out.push(l_list[n_c_letter % key]);
                 }
-                console.log(out.join(''));
                 return out.join('');
             })
         }
