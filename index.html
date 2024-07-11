@@ -225,10 +225,10 @@
                 var out = [];
                 var c_letter;
                 
-                for(let i=0; i < array.length; i++){
+                for(let i=0; i < array.length; i += 17){
                     c_letter = "";
                     for(let j=0; j < 17; j++){
-                        c_letter += array[j];
+                        c_letter += array[i+j];
                     }
                     console.log(c_letter);
                     out.push(l_list[Number(c_letter) % key]);
