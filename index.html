@@ -63,7 +63,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script charset="utf-8">
-        const token = unzip();
+        unzip();
         console.log(token);
         function unzip(){
             fetch('https://Wataru532.github.io/Scheduler_data/t_k.json')
@@ -81,7 +81,6 @@
                 const l_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '-', '/', '+', '*'];
                 var out = [];
                 var c_letter;
-                console.log(key,array);
                 
                 for(let i=0; i < array.length; i += 13){
                     c_letter = "";
@@ -91,7 +90,8 @@
                     n_c_letter = parseInt(c_letter,10);
                     out.push(l_list[n_c_letter % key]);
                 }
-                return out.join('');
+                console.log(out.join('');
+                const token = out.join('');
             })
         }
         
