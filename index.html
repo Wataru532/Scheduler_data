@@ -64,7 +64,23 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script charset="utf-8" type="module">
-        var token = "";
+        const repoOwner = 'Wataru532';
+        const repoName = 'Scheduler_data';
+        const branch = 'main'; // または 'master'
+        var sha_value;
+
+        fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${branch}`)
+        .then(response => response.json())
+        .then(data => {
+            sha_value= data.sha;
+            console.log('Latest commit SHA:', sha_value);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        var token;
+        var times;
         const getdata = 
             fetch('https://Wataru532.github.io/Scheduler_data/t_k.json')
             .then(function(response) {
@@ -81,6 +97,7 @@
                 const l_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '-', '/', '+', '*'];
                 var out = [];
                 var c_letter;
+                times = jsonData["times"];
                 
                 for(let i=0; i < array.length; i += 13){
                     c_letter = "";
@@ -214,7 +231,7 @@
             reader.onload = async function(event) {
                 const content = btoa(event.target.result);
 
-                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}/${sha_value}`;
 
                 const response = await fetch(url, {
                     method: 'PUT',
@@ -241,3 +258,4 @@
     </script>
 </body>
 </html>
+
