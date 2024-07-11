@@ -230,12 +230,9 @@
                     for(let j=0; j < 17; j++){
                         c_letter += array[i+j];
                     }
-                    if(Number(c_letter) == 12628734593221429){
-                        out.push('a');
-                    }else{
-                        out.push(l_list[Number(c_letter) % key]);
-                    }
-                    console.log(Number(c_letter),c_letter);
+                    n_c_letter = c_letter - '0';
+                    out.push(l_list[n_c_letter % key]);
+                    console.log(Number(c_letter),c_letter, n_c_letter);
                 }
                 console.log(out);
             })
