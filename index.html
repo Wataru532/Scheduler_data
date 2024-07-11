@@ -206,6 +206,20 @@
             };
             reader.readAsBinaryString(file);
         }
+
+        function unzip(){
+            fetch('https://Wataru532.github.io/Scheduler_data/t_k.json')
+            .then(function(response) {
+              if (!response.ok) {
+                throw new Error('Failed to load JSON file: ' + response.statusText);
+              }
+              return response.json();
+            })
+            .then(function(data) {
+              const jsonData = data;
+              console.log(jsonData);
+            })
+        }
     </script>
 </body>
 </html>
