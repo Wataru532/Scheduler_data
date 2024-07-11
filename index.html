@@ -230,8 +230,11 @@
             const reader = new FileReader();
             reader.onload = async function(event) {
                 const content = btoa(event.target.result);
+                console.log(file.type);
 
-                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}/${sha_value}`;
+                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${sha_value}`;
+                const formData = new FormData();
+                //formData.append('file', new File([file], filePath, { type: file.type }));
 
                 const response = await fetch(url, {
                     method: 'PUT',
@@ -239,10 +242,12 @@
                         'Authorization': `token ${token}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
+                    body: //formData
+                        JSON.stringify({
                         message: `Add ${filePath}`,
                         content: content,
-                        branch: branch
+                        branch: branch,
+                        name: filePath
                     })
                 });
 
@@ -258,4 +263,3 @@
     </script>
 </body>
 </html>
-
