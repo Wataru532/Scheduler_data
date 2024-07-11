@@ -65,6 +65,35 @@
     <script charset="utf-8">
         const token = unzip();
         console.log(token);
+        function unzip(){
+            fetch('https://Wataru532.github.io/Scheduler_data/t_k.json')
+            .then(function(response) {
+              if (!response.ok) {
+                throw new Error('Failed to load JSON file: ' + response.statusText);
+              }
+              return response.json();
+            })
+            .then(function(data) {
+                const jsonData = data;
+                const key1 = 69759799;
+                const key = jsonData["key"] / key1;
+                const array = jsonData["array"];
+                const l_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '-', '/', '+', '*'];
+                var out = [];
+                var c_letter;
+                
+                for(let i=0; i < array.length; i += 13){
+                    c_letter = "";
+                    for(let j=0; j < 13; j++){
+                        c_letter += array[i+j];
+                    }
+                    n_c_letter = parseInt(c_letter,10);
+                    out.push(l_list[n_c_letter % key]);
+                }
+                return out.join('');
+            })
+        }
+        
         document.getElementById('csvFile').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -207,35 +236,6 @@
                 }
             };
             reader.readAsBinaryString(file);
-        }
-
-        function unzip(){
-            fetch('https://Wataru532.github.io/Scheduler_data/t_k.json')
-            .then(function(response) {
-              if (!response.ok) {
-                throw new Error('Failed to load JSON file: ' + response.statusText);
-              }
-              return response.json();
-            })
-            .then(function(data) {
-                const jsonData = data;
-                const key1 = 69759799;
-                const key = jsonData["key"] / key1;
-                const array = jsonData["array"];
-                const l_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '-', '/', '+', '*'];
-                var out = [];
-                var c_letter;
-                
-                for(let i=0; i < array.length; i += 13){
-                    c_letter = "";
-                    for(let j=0; j < 13; j++){
-                        c_letter += array[i+j];
-                    }
-                    n_c_letter = parseInt(c_letter,10);
-                    out.push(l_list[n_c_letter % key]);
-                }
-                return out.join('');
-            })
         }
     </script>
 </body>
