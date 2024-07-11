@@ -89,7 +89,6 @@
                     var n_c_letter = parseInt(c_letter,10);
                     out.push(l_list[n_c_letter % key]);
                 }
-                console.log(out.join(''));
                 token = out.join('');
             });
 
@@ -209,7 +208,6 @@
             const owner = 'Wataru532'; //your-github-username
             const branch = 'main';
             const filePath = 'scheduler_data.json';
-            console.log(token);
 
             const reader = new FileReader();
             reader.onload = async function(event) {
