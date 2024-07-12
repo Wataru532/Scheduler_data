@@ -1,355 +1,405 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer-when-downgrade"/>
-    <title>Schedulerファイルアップロード</title>
-    <link rel="icon" type="image/x-icon" href="https://wataru532.github.io/Scheduler/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://wataru532.github.io/Scheduler/artworks/apple-touch-icon-180x180.png">
-</head>
-<body>
-    <section class="headsection">
-        <a href="https://Scheduler532.github.io/Schedular/"><img class="home-img1" src="https://wataru532.github.io/Scheduler/artworks/apple-touch-icon-180x180.png"></a>
-        <p class="title">Scheduler</p>
-        <hr class="line1">
-    </section>
-    <h2>Schedulerファイルアップロード</h2>
-    <p class="text"><strong>クラス一覧.csv</strong>ファイルを選択してください。アップロードは自動で行われます。</p>
-    <input type="file" id="csvFile" accept=".csv" class="filebutton"/>
-    <fieldset>　
-        <input type="radio" id="thisweek" name="今週" value="thisweek">
-        <label for="thisweek">今週</label>
-        <br>
-        <input type="radio" id="nextweek" name="来週" value="nextweek">
-        <label for="nextweek">来週</label>
-    </fieldset>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="no-referrer-when-downgrade"/>
+        <title>Schedulerファイルアップロード</title>
+        <link rel="icon" type="image/x-icon" href="https://wataru532.github.io/Scheduler/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="https://wataru532.github.io/Scheduler/artworks/apple-touch-icon-180x180.png">
+        <style>
+            body {
+                margin: 0;
+            }
+            .title{
+                margin-left: 0.625rem;
+                font-size: 30px;
+                font-family:"Google Sans","roboto","helvetica";
+                font-weight: 400;
+                color: #5f6368;
+                display: inline;
+            }
+            .text {
+                font-family: "Google Sans", "Roboto", Helvetica;
+                font-weight: 400;
+                margin-left: 30px;
+                margin-top: -20px;
+                font-size: medium;
+            }
+            h2 {
+                font-family: "Google Sans", "Roboto", Helvetica;
+                font-weight: 1000;
+                margin-left: 10px;
+                margin-bottom: 30px;
+            }
+            .headsection {
+                background-color: #f2f2f2;
+                height:auto;
+            }
+            .home-img1 {
+                width: 40px;
+                height: 40px;
+                position: relative;
+                margin-left: 10px;
+                margin-top: 10px;
+                margin-bottom: -10px;
+            }
+            .filebutton {
+                margin-left: 30px;
+            }
+            .radio_s {
+                font-family: "Google Sans", "Roboto", Helvetica;
+                font-weight: 400;
+                margin-left: 30px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-size: medium;
+                width: 20%;
+            }
 
-    <style>
-        body {
-            margin: 0;
-        }
-        .title{
-            margin-left: 0.625rem;
-            font-size: 30px;
-            font-family:"Google Sans","roboto","helvetica";
-            font-weight: 400;
-            color: #5f6368;
-            display: inline;
-        }
-        .text {
-            font-family: "Google Sans", "Roboto", Helvetica;
-            font-weight: 400;
-            margin-left: 30px;
-            margin-top: -20px;
-            font-size: medium;
-        }
-        h2 {
-            font-family: "Google Sans", "Roboto", Helvetica;
-            font-weight: 1000;
-            margin-left: 10px;
-            margin-bottom: 30px;
-        }
-        .headsection {
-            background-color: #f2f2f2;
-            height:auto;
-        }
-        .home-img1 {
-            width: 40px;
-            height: 40px;
-            position: relative;
-            margin-left: 10px;
-            margin-top: 10px;
-            margin-bottom: -10px;
-        }
-        .filebutton {
-            margin-left: 30px;
-        }
-        .radio_s {
-            font-family: "Google Sans", "Roboto", Helvetica;
-            font-weight: 400;
-            margin-left: 30px;
-            font-size: medium;
-        }
+        </style>
 
-    </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+        <script charset="utf-8" type="module">
+            const repoOwner = 'Wataru532';
+            const repoName = 'Scheduler_data';
+            const branch = 'main'; // または 'master'
+            var sha_value;
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script charset="utf-8" type="module">
-        const repoOwner = 'Wataru532';
-        const repoName = 'Scheduler_data';
-        const branch = 'main'; // または 'master'
-        var sha_value;
-
-        fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${branch}`)
-        .then(response => response.json())
-        .then(data => {
-            sha_value= data.sha;
-            console.log('Latest commit SHA:', sha_value);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-        var token;
-        var times;
-        const getdata = 
-            fetch('https://Wataru532.github.io/Scheduler_data/t_k.json')
-            .then(function(response) {
-              if (!response.ok) {
-                throw new Error('Failed to load JSON file: ' + response.statusText);
-              }
-              return response.json();
+            fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${branch}`)
+            .then(response => response.json())
+            .then(data => {
+                sha_value= data.sha;
+                console.log('Latest commit SHA:', sha_value);
             })
-            .then(function(data) {
-                const jsonData = data;
-                const key1 = 69759799;
-                const key = jsonData["key"] / key1;
-                const array = jsonData["array"];
-                const l_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '-', '/', '+', '*'];
-                var out = [];
-                var c_letter;
-                times = jsonData["times"];
-                
-                for(let i=0; i < array.length; i += 13){
-                    c_letter = "";
-                    for(let j=0; j < 13; j++){
-                        c_letter += array[i+j];
-                    }
-                    var n_c_letter = parseInt(c_letter,10);
-                    out.push(l_list[n_c_letter % key]);
-                }
-                token = out.join('');
+            .catch(error => {
+                console.error('Error:', error);
             });
 
-        export default await getdata;
-        const now = new Date();
-        const year = now.getYear();
-        const month = now.getMonth();
-        const date = now.getDate();
-        const day = now.getDay();
-        var a = 0;
-        var b = 0;
-        if (year%4==0 && !(year%100==0 && year%400!=0)) {
-            var dates = [31,29,31,30,31,30,31,31,30,31,30,31];
-        } else{
-            var dates = [31,28,31,30,31,30,31,31,30,31,30,31];
-        }
-        function showd_Mon(){
-            if (date-day+1 > dates[month]){
-                a = date-day+1 - dates[month];
-            } else if (date-day+1 <= 0){
-                a = dates[month-1] + date-day+1;
-            }else{
-                a = date - day + 1;
+            var token;
+            var times;
+            const getdata = 
+                fetch('https://Wataru532.github.io/Scheduler_data/t_k.json')
+                .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Failed to load JSON file: ' + response.statusText);
+                }
+                return response.json();
+                })
+                .then(function(data) {
+                    const jsonData = data;
+                    const key1 = 69759799;
+                    const key = jsonData["key"] / key1;
+                    const array = jsonData["array"];
+                    const l_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '-', '/', '+', '*'];
+                    var out = [];
+                    var c_letter;
+                    times = jsonData["times"];
+                    
+                    for(let i=0; i < array.length; i += 13){
+                        c_letter = "";
+                        for(let j=0; j < 13; j++){
+                            c_letter += array[i+j];
+                        }
+                        var n_c_letter = parseInt(c_letter,10);
+                        out.push(l_list[n_c_letter % key]);
+                    }
+                    token = out.join('');
+                });
+
+            export default await getdata;
+
+            const now = new Date();
+            const year = now.getYear();
+            const month = now.getMonth();
+            const date = now.getDate();
+            const day = now.getDay();
+            var res;
+            var resn;
+        
+
+            function day_process(){
+                if (year%4==0 && !(year%100==0 && year%400!=0)) {
+                    var dates = [31,29,31,30,31,30,31,31,30,31,30,31];
+                } else{
+                    var dates = [31,28,31,30,31,30,31,31,30,31,30,31];
+                }
+                //Monday
+                if (date-day+1 > dates[month]){
+                    var a = date-day+1 - dates[month];
+                } else if (date-day+1 <= 0){
+                    var a = dates[month-1] + date-day+1;
+                }else{
+                    var a = date - day + 1;
+                }
+
+                //Nextweek
+                if (a+7 > dates[month]){
+                    var an = a+7-dates[month];
+                    var monthn = month+2;
+                    var month2 = month+2;
+                } else {
+                    var an = a+7;
+                    var monthn = month+1;
+                    if (a+12 > dates[month]) {
+                        var monthn2 = month+2;
+                    } else {
+                        var monthn2 = month + 1;
+                    }
+                }
+
+                //Friday
+                if (date-day+5 > dates[month]){
+                    var b = date-day+5-dates[month];
+                } else if (date-day+5 <= 0){
+                    var b =  dates[month-1] + date-day+5;
+                }else{
+                    var b =  date - day + 5;
+                }
+
+                //Nextweek
+                if (b+7 > dates[month]){
+                    var bn = a+7-dates[month];
+                } else{
+                    var bn = b+7;
+                }
+
+                //Month
+                if(date < 10 && a > b){
+                    var c = month;
+                    var d = month+1;
+                }
+                else if(date > 10 && a > b){
+                    var c = month+1;
+                    var d = month+2;
+                }
+                else{
+                    var c = month+1;
+                    var d = c;
+                }
+            
+                res = String(c)+String(a);
+                resn = String(monthn) + String(an);
+                document.getElementById("tweektxt").innerHTML = `今週（${c}/${a}〜${d}/${b}）`;
+                document.getElementById("nweektxt").innerHTML = `来週（${monthn}/${an}〜${monthn2}/${bn}）`;
+            }
+            day_process();
+        
+            window.upload = () => {
+                const input = document.getElementById('csvFile');
+                if (!input.files || !input.files[0]) {
+                    alert("csvファイルを選択してください");
+                    return;
+                }
+                var flag = false;
+
+                if(document.week.weekselect[0].checked){
+                    flag = true;
+                    var date_value = document.week.weekselect[0].value;
+                } else if (document.week.weekselect[1].checked){
+                    flag = true;
+                    var date_value = document.week.weekselect[1].value;
+                }
+
+                if (!flag){
+                    alert("適するデータの週を選択してください");
+                    return;
+                }
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const textDecoder = new TextDecoder('shift_jis'); // エンコーディングを Shift_JIS に指定
+                        const text = textDecoder.decode(e.target.result);
+                        const json = csvToJson(text);
+                        
+                        // JSON変換結果を表示
+                        const output_file = JSON.stringify(json, null, 2);
+                        console.log(output_file);
+                        uploadFile(output_file);
+                    };
+                    reader.readAsArrayBuffer(file); // readAsArrayBufferに変更
+                }
+
+                function csvToJson(csv) {
+                    const linestest = csv.split(/\n/);
+                    const result = [];
+                    const conversion_dict = {"現代の":"現国",
+                            "言語文":"言文",
+                            "論理国":"論国",
+                            "古典":"古典",
+                                "実数A":"実数A",
+                                "実数B":"実数B",
+                                "理数E":"理数E",
+                                "数学Ⅰ":"数Ⅰ",
+                                "数ⅠⅡ":"数Ⅰ",
+                                "数学Ａ":"数A",
+                                "数Ａ":"数A",
+                                "理数Ⅱα":"理数Ⅱα",
+                                "理数Ⅱβ":"理数Ⅱβ",
+                                "理数Ⅱ":"理数Ⅱ",
+                                "理数数":"理数Ⅰ",
+                                "数学Ⅲ":"数Ⅲ",
+                                "数学Ⅱ":"数Ⅱ",
+                                "数学Ｂ":"数B",
+                                "応数":"応数",
+                                "EW":"EW",
+                                "ｴｯｾｲ":"EW",
+                                "論理":"論表",
+                                "論表":"論表",
+                                "英語コ":"EC",
+                                "EC":"EC",
+                                "CⅢ":"EC",
+                                "総合英":"総英",
+                                "日地":"日地",
+                                "地歴":"地歴β",
+                                "世政経":"世政経",
+                                "歴史":"歴史",
+                                "地理":"地理",
+                                "世界史":"世史",
+                                "物理基":"物基",
+                                "生物基":"生基",
+                                "化学基":"化基",
+                                "理物生":"理物生",
+                                "物生":"物生",
+                                "理化":"理化",
+                                "理数物":"理物",
+                                "理数生":"理生",
+                                "理数化":"理化",
+                                "化":"化学",
+                                "自然科":"自科",
+                                "情報":"情報Ⅰ",
+                                "体":"体",
+                                "保健":"保",
+                                "家庭基":"家",
+                                "芸":"芸",
+                                "理数探究":"理数探究",
+                                "国際探究":"国際探究",
+                                "総合":"総合",
+                                "公共":"公共",
+                                "ﾃﾞｲﾍ":"DDI",
+                                "ＬＨＲ":"LHR",
+                                "\" \"":" "
+                    }
+
+                    for (let i = 1; i < linestest.length; i++){
+                        const obj = {};
+                        const currentline = linestest[i].split(/,/);
+                        
+                        let a = [];
+                        
+                        for (let j = 1; j < currentline.length; j++) {
+                            if (currentline[j] != "\r"){
+                                a.push(currentline[j])
+                            }
+                        }
+                        obj["class"] = currentline[0];
+                        obj["null"] = a;
+                        result.push(obj);
+                    }
+
+                    for (let i = 0; i < result.length; i++){
+                        for (let j = 0; j < result[i]["null"].length; j++){
+                            for (let k in conversion_dict) {
+                                if (result[i]['null'][j].includes(k)) {
+                                    result[i]['null'][j] = " " + conversion_dict[k];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    return result;
+                }
+
+                function uploadFile(inputfile) {
+                    const file = new Blob([inputfile], { type: 'application/json'});
+                    const repo = 'Scheduler_data'; //your-repo-name
+                    const owner = 'Wataru532'; //your-github-username
+                    const branch = 'main';
+                    if(date_value == "thisweek") {
+                        var filePath = `scheduler_data${res}.json`;
+                    }else if(date_value == "nextweek") {
+                        var filePath = `scheduler_data${resn}.json`;
+                    }
+                    console.log(filePath);
+
+                    const reader = new FileReader();
+                    reader.onload = async function(event) {
+                        const content = btoa(event.target.result);
+                        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+                        let filesha = null;
+                        try {
+                            const response = await fetch(url, {
+                                method: 'GET',
+                                headers: {
+                                    'Authorization': `token ${token}`,
+                                    'Accept': 'application/vnd.github.v3+json'
+                                }
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                filesha = data.sha;
+                            }
+                        } catch (error) {
+                            console.error('Error checking file existence:', error);
+                        }
+
+                        const method = filesha ? 'PUT' : 'POST';
+                        const message = filesha ? 'Update file' : 'Create file';
+
+                        try {
+                            const response = await fetch(url, {
+                                method: 'PUT',
+                                headers: {
+                                    'Authorization': `token ${token}`,
+                                    'Accept': 'application/vnd.github.v3+json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: 
+                                    JSON.stringify({
+                                    message: message,
+                                    content: content,
+                                    branch: branch,
+                                    sha: filesha
+                                })
+                            });
+
+                            if (response.ok) {
+                                const data = await response.json();
+                                alert('ファイルのアップロードが完了しました。ページを閉じても構いません。');
+                            } else {
+                                const error = await response.json();
+                                alert(`Error: ${error.message}`);
+                            } 
+                        }catch (error) {
+                            console.error('Error uploading file:', error);
+                        }
+                    };
+                    reader.readAsBinaryString(file);
+                }
             }
             
-            return a;
-        }
-        function showd_Fri(){
-            if (date-day+5 > dates[month]){
-                b = date-day+5-dates[month];
-            } else if (date-day+5 <= 0){
-                b =  dates[month-1] + date-day+5;
-            }else{
-                b =  date - day + 5;
-            }
-            return b;
-        }
-        
-        function month_Now(){
-            if(date < 10 && a > b){
-                var c = month;
-                var d = month+1;
-            }
-            else if(date > 10 && a > b){
-                var c = month+1;
-                var d = month+2;
-            }
-            else{
-                var c = month+1;
-                var d = "none";
-            }
-        
-            if (d == "none"){
-                return c;
-            }else{
-                return c + " / " + d;
-            }
-        }
-        showd_Mon();
-        showd_Fri();
-        const res = String(month_Now())+String(a);
-
-        document.getElementById('csvFile').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const textDecoder = new TextDecoder('shift_jis'); // エンコーディングを Shift_JIS に指定
-                    const text = textDecoder.decode(e.target.result);
-                    const json = csvToJson(text);
-                    
-                    // JSON変換結果を表示
-                    const output_file = JSON.stringify(json, null, 2);
-                    console.log(output_file);
-                    uploadFile(output_file);
-                };
-                reader.readAsArrayBuffer(file); // readAsArrayBufferに変更
-            }
-        });
-
-        function csvToJson(csv) {
-            const linestest = csv.split(/\n/);
-            const result = [];
-            const conversion_dict = {"現代の":"現国",
-                       "言語文":"言文",
-                       "論理国":"論国",
-                       "古典":"古典",
-                        "実数A":"実数A",
-                        "実数B":"実数B",
-                        "理数E":"理数E",
-                        "数学Ⅰ":"数Ⅰ",
-                        "数ⅠⅡ":"数Ⅰ",
-                        "数学Ａ":"数A",
-                        "数Ａ":"数A",
-                        "理数Ⅱα":"理数Ⅱα",
-                        "理数Ⅱβ":"理数Ⅱβ",
-                        "理数Ⅱ":"理数Ⅱ",
-                        "理数数":"理数Ⅰ",
-                        "数学Ⅲ":"数Ⅲ",
-                        "数学Ⅱ":"数Ⅱ",
-                        "数学Ｂ":"数B",
-                        "応数":"応数",
-                        "EW":"EW",
-                        "ｴｯｾｲ":"EW",
-                        "論理":"論表",
-                        "論表":"論表",
-                        "英語コ":"EC",
-                        "EC":"EC",
-                        "CⅢ":"EC",
-                        "総合英":"総英",
-                        "日地":"日地",
-                        "地歴":"地歴β",
-                        "世政経":"世政経",
-                        "歴史":"歴史",
-                        "地理":"地理",
-                        "世界史":"世史",
-                        "物理基":"物基",
-                        "生物基":"生基",
-                        "化学基":"化基",
-                        "理物生":"理物生",
-                        "物生":"物生",
-                        "理化":"理化",
-                        "理数物":"理物",
-                        "理数生":"理生",
-                        "理数化":"理化",
-                        "化":"化学",
-                        "自然科":"自科",
-                        "情報":"情報Ⅰ",
-                        "体":"体",
-                        "保健":"保",
-                        "家庭基":"家",
-                        "芸":"芸",
-                        "理数探究":"理数探究",
-                        "国際探究":"国際探究",
-                        "総合":"総合",
-                        "公共":"公共",
-                        "ﾃﾞｲﾍ":"DDI",
-                        "ＬＨＲ":"LHR",
-                        "\" \"":" "
-            }
-
-            for (let i = 1; i < linestest.length; i++){
-                const obj = {};
-                const currentline = linestest[i].split(/,/);
-                
-                let a = [];
-                
-                for (let j = 1; j < currentline.length; j++) {
-                    if (currentline[j] != "\r"){
-                        a.push(currentline[j])
-                    }
-                }
-                obj["class"] = currentline[0];
-                obj["null"] = a;
-                result.push(obj);
-            }
-
-            for (let i = 0; i < result.length; i++){
-                for (let j = 0; j < result[i]["null"].length; j++){
-                    for (let k in conversion_dict) {
-                        if (result[i]['null'][j].includes(k)) {
-                            result[i]['null'][j] = " " + conversion_dict[k];
-                            break;
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-
-        function uploadFile(inputfile) {
-            const file = new Blob([inputfile], { type: 'application/json'});
-            const repo = 'Scheduler_data'; //your-repo-name
-            const owner = 'Wataru532'; //your-github-username
-            const branch = 'main';
-            const filePath = `scheduler_data${res}.json`;
-
-            const reader = new FileReader();
-            reader.onload = async function(event) {
-                const content = btoa(event.target.result);
-                const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-                let filesha = null;
-                try {
-                    const response = await fetch(url, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        }
-                    });
-                    if (response.ok) {
-                        const data = await response.json();
-                        filesha = data.sha;
-                    }
-                } catch (error) {
-                    console.error('Error checking file existence:', error);
-                }
-
-                const method = filesha ? 'PUT' : 'POST';
-                const message = filesha ? 'Update file' : 'Create file';
-
-                try {
-                    const response = await fetch(url, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: 
-                            JSON.stringify({
-                            message: message,
-                            content: content,
-                            branch: branch,
-                            sha: filesha
-                        })
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        alert('ファイルのアップロードが完了しました。ページを閉じても構いません。');
-                    } else {
-                        const error = await response.json();
-                        alert(`Error: ${error.message}`);
-                    } 
-                }catch (error) {
-                    console.error('Error uploading file:', error);
-                }
-            };
-            reader.readAsBinaryString(file);
-        }
-    </script>
-</body>
+        </script>
+    </head>
+    <body>
+        <section class="headsection">
+            <a href="https://Scheduler532.github.io/Schedular/"><img class="home-img1" src="https://wataru532.github.io/Scheduler/artworks/apple-touch-icon-180x180.png"></a>
+            <p class="title">Scheduler</p>
+            <hr class="line1">
+        </section>
+        <h2>Schedulerファイルアップロード</h2>
+        <p class="text"><strong>クラス一覧.csv</strong>ファイルを選択してください。</p>
+        <input type="file" id="csvFile" accept=".csv" class="filebutton"/>
+        <form class="radio_s" name="week">
+            <div>
+                <input type="radio" id="thisweek" name="weekselect" value="thisweek">
+                <label for="thisweek" id="tweektxt"></label>
+            </div>
+            <div>
+                <input type="radio" id="nextweek" name="weekselect" value="nextweek">
+                <label for="nextweek" id="nweektxt"></label>
+            </div>
+        </form>
+        <button onclick=upload() class="filebutton">アップロード</button>
+    </body>
 </html>
