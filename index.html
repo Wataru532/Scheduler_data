@@ -111,7 +111,64 @@
             });
 
         export default await getdata;
+        const now = new Date();
+        const year = now.getYear();
+        const month = now.getMonth();
+        const date = now.getDate();
+        const day = now.getDay();
+        var a = 0;
+        var b = 0;
+        if (year%4==0 && !(year%100==0 && year%400!=0)) {
+            var dates = [31,29,31,30,31,30,31,31,30,31,30,31];
+        } else{
+            var dates = [31,28,31,30,31,30,31,31,30,31,30,31];
+        }
+        function showd_Mon(){
+            if (date-day+1 > dates[month]){
+                a = date-day+1 - dates[month];
+            } else if (date-day+1 <= 0){
+                a = dates[month-1] + date-day+1;
+            }else{
+                a = date - day + 1;
+            }
+            
+            return a;
+        }
+        function showd_Fri(){
+            if (date-day+5 > dates[month]){
+                b = date-day+5-dates[month];
+            } else if (date-day+5 <= 0){
+                b =  dates[month-1] + date-day+5;
+            }else{
+                b =  date - day + 5;
+            }
+            return b;
+        }
         
+        function month_Now(){
+            if(date < 10 && a > b){
+                var c = month;
+                var d = month+1;
+            }
+            else if(date > 10 && a > b){
+                var c = month+1;
+                var d = month+2;
+            }
+            else{
+                var c = month+1;
+                var d = "none";
+            }
+        
+            if (d == "none"){
+                return c;
+            }else{
+                return c + " / " + d;
+            }
+        }
+        showd_Mon();
+        showd_Fri();
+        const res = String(month_Now())+String(a);
+
         document.getElementById('csvFile').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -225,7 +282,7 @@
             const repo = 'Scheduler_data'; //your-repo-name
             const owner = 'Wataru532'; //your-github-username
             const branch = 'main';
-            const filePath = 'scheduler_data.json';
+            const filePath = 'scheduler_data${res}.json';
 
             const reader = new FileReader();
             reader.onload = async function(event) {
