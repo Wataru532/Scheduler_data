@@ -45,8 +45,23 @@
                 margin-bottom: -10px;
             }
             .filebutton {
-                margin-left: 30px;
+                position: relative;
+                z-index: 2;
+                display: block;
+                width: 200px;
+                height: 53px;
+                border: 1px solid #005475;
+                border-radius: 1rem;
+                background: #005475;
+                text-decoration: none;
+                color: #fff;
+                font-size: 26px;
+                line-height: 1;
+                font-weight: bold;
+                margin-top: 0px;
+                margin-left: 10%;
             }
+
             .radio_s {
                 font-family: "Google Sans", "Roboto", Helvetica;
                 font-weight: 400;
@@ -57,6 +72,131 @@
                 width: 20%;
             }
 
+            .fileuploading{
+                position: relative;
+                display: flex;
+                justify-content: center; /* 水平方向の中央寄せ */
+                align-items: center; /* 垂直方向の中央寄せ */
+                margin: 0; /* コンテナ自体を中央寄せ */
+            }
+            
+            .filename {
+                position: relative;
+                display: block;
+                font-family: "Google Sans", "Roboto", Helvetica;
+                font-weight: bold;
+                font-size: large;
+            }
+
+            .filebutton:hover{
+                background: #0079a9;
+                border: 1px solid #0079a9;
+            }
+
+            #inputFile {
+                position: relative;
+                text-align: center;
+            }
+
+            #dropArea {
+                position: relative;
+                width: 90%;
+                height: 90%;
+                padding: 200px 0 0;
+                border: 2px dashed #494949;
+                background: rgba(134, 220, 235, 0);
+                transition: all 0.25s cubic-bezier(0.21, 0.51, 0.51, 1);
+                border-radius: 3cap;
+                text-align: center;
+                display: inline-block;
+                justify-content: center; /* 水平方向の中央寄せ */
+                align-items: center; /* 垂直方向の中央寄せ */
+                margin: 0 auto; /* コンテナ自体を中央寄せ */
+                margin-bottom: 1%;
+            }
+
+            #dropArea.dragover {
+                border: 2px solid #16a5bf;
+                background: rgba(22, 165, 191, 0.6);
+                
+            }
+
+            #csvFile {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+                display: block;
+                width: 300px;
+                height: 80px;
+                opacity: 0;
+            }
+
+            #inputFileWrap {
+                position: relative;
+                display: inline-flex;
+            }
+
+            #btnInputFile,
+            #btnChangeFile {
+                display: table;
+                width: 300px;
+            }
+
+            #btnChangeFile {
+                display: none;
+            }
+
+
+            #btnInputFile span,
+            #btnChangeFile span {
+                position: relative;
+                z-index: 2;
+                display: table-cell;
+                width: 200px;
+                height: 53px;
+                border: 1px solid #005475;
+                border-radius: 1rem;
+                background: #005475;
+                text-decoration: none;
+                color: #fff;
+                font-size: 26px;
+                line-height: 1;
+                font-weight: bold;
+                vertical-align: middle;
+            }
+
+            /*#btnInputFile span,
+            #btnChangeFile span:hover{
+                background: #0079a9;
+                border: 1px solid #0079a9;
+            }*/
+
+            #upFileWrap.selected #btnInputFile {
+                display: none;
+            }
+
+            #upFileWrap.selected #btnChangeFile {
+                display: table;
+            }
+
+            .versiontxt{
+                margin-right: 10px;
+            }
+
+            .feedbacktxt{
+                text-align: right;
+                text-decoration: none;
+                color: #494949;
+                position: relative;
+                display: block;
+                margin-right: 10px;
+            }
+
+            .feedbacktxt:hover{
+                color: #435f89;
+            }
+
         </style>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -65,6 +205,65 @@
             const repoName = 'Scheduler_data';
             const branch = 'main'; // または 'master'
             var sha_value;
+            // ドラッグ&ドロップエリアの取得
+            var fileArea = document.getElementById('dropArea');
+
+            // input[type=file]の取得
+            var fileInput = document.getElementById('csvFile');
+
+            // ドラッグオーバー時の処理
+            fileArea.addEventListener('dragover', function(e){
+                e.preventDefault();
+                fileArea.classList.add('dragover');
+            });
+
+            // ドラッグアウト時の処理
+            fileArea.addEventListener('dragleave', function(e){
+                e.preventDefault();
+                fileArea.classList.remove('dragover');
+            });
+
+            // ドロップ時の処理
+            fileArea.addEventListener('drop', function(e){
+                e.preventDefault();
+                fileArea.classList.remove('dragover');
+
+                // ドロップしたファイルの取得
+                var files = e.dataTransfer.files;
+
+                // 取得したファイルをinput[type=file]へ
+                fileInput.files = files;
+                const allowExtensions = '.(csv)$'; 
+                var fname = document.getElementById('csvFile').files[0].name;
+                console.log(fname);
+                if(!fname.match(allowExtensions)){
+                    alert(".csvファイルをアップロードしてください");
+                    fname = "";
+                } else{
+                    document.getElementById("filename").innerHTML = fname;
+                };
+                
+                if(typeof files[0] !== 'undefined') {
+                    //ファイルが正常に受け取れた際の処理
+                } else {
+                    //ファイルが受け取れなかった際の処理
+                }
+            });
+
+            // input[type=file]に変更があれば実行
+            // もちろんドロップ以外でも発火します
+            fileInput.addEventListener('change', function(e){
+                var file = e.target.files[0];
+                var fname = document.getElementById('csvFile').files[0].name;
+                console.log(fname)
+                document.getElementById("filename").innerHTML = fname;
+
+                if(typeof e.target.files[0] !== 'undefined') {
+                    // ファイルが正常に受け取れた際の処理
+                } else {
+                    // ファイルが受け取れなかった際の処理
+                }
+            }, false);
 
             fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${branch}`)
             .then(response => response.json())
@@ -158,10 +357,10 @@
                 }
 
                 //Nextweek
-                if (b+7 > dates[month]){
-                    var bn = a+7-dates[month];
+                if (an+4 > dates[month]){
+                    var bn = an+4-dates[month];
                 } else{
-                    var bn = b+7;
+                    var bn = an+4;
                 }
 
                 //Month
@@ -279,7 +478,8 @@
                                 "公共":"公共",
                                 "ﾃﾞｲﾍ":"DDI",
                                 "ＬＨＲ":"LHR",
-                                "\" \"":" "
+                                "\" \"":" ",
+                                "  ":" "
                     }
 
                     for (let i = 1; i < linestest.length; i++){
@@ -388,18 +588,36 @@
             <hr class="line1">
         </section>
         <h2>Schedulerファイルアップロード</h2>
-        <p class="text"><strong>クラス一覧.csv</strong>ファイルを選択してください。</p>
-        <input type="file" id="csvFile" accept=".csv" class="filebutton"/>
-        <form class="radio_s" name="week">
-            <div>
-                <input type="radio" id="thisweek" name="weekselect" value="thisweek">
-                <label for="thisweek" id="tweektxt"></label>
+        <p class="text"><strong>クラス一覧.csv</strong>ファイルを選択してください。また、今週か来週かも選択してください。</p>
+        <!-- <input type="file" id="csvFile" accept=".csv" class="filebutton"/> -->
+        <div id="upFileWrap">
+            <div id="inputFile">
+                <!-- ドラッグ&ドロップエリア -->
+                <p id="dropArea">ここにファイルをドロップしてください<br>または</p>
+        
+                <!-- 通常のinput[type=file] -->
+                <div id="inputFileWrap">
+                    <input type="file" name="uploadcsvFile" id="csvFile" accept=".csv">
+                    <div id="btnInputFile"><span>ファイルを選択する</span></div>
+                    <div id="btnChangeFile"><span>ファイルを変更する</span></div>
+                </div>
             </div>
-            <div>
-                <input type="radio" id="nextweek" name="weekselect" value="nextweek">
-                <label for="nextweek" id="nweektxt"></label>
-            </div>
-        </form>
-        <button onclick=upload() class="filebutton">アップロード</button>
+        </div>
+        <span class="fileuploading">
+            <form class="radio_s" name="week">
+                <div>
+                    <input type="radio" id="thisweek" name="weekselect" value="thisweek">
+                    <label for="thisweek" id="tweektxt"></label>
+                </div>
+                <div>
+                    <input type="radio" id="nextweek" name="weekselect" value="nextweek">
+                    <label for="nextweek" id="nweektxt"></label>
+                </div>
+            </form>
+            <p id="filename" class="filename"></p>
+            <button onclick=upload() class="filebutton" >アップロード</button>
+        </span>
+        <p class="versiontxt" align="right">v1.1.0</p>
+        <a class="feedbacktxt" href="https://forms.gle/9ExuRPUDyRMcMxxp8" target="_blank" rel="noopener noreferrer">Feedback</a>
     </body>
 </html>
