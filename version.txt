@@ -1,4 +1,7 @@
-v1.1.0 (2024 10/21)
+v1.1.1 (2024/10/22)
+Separated css code
+
+v1.1.0 (2024/10/21)
 Updated design and useability
 
 v1.0.0
