@@ -124,6 +124,10 @@ h2 {
     opacity: 0;
 }
 
+#csvFile: hover{
+    background: #0079a9;
+}
+
 #inputFileWrap {
     position: relative;
     display: inline-flex;
@@ -147,10 +151,10 @@ h2 {
     display: table-cell;
     width: 200px;
     height: 53px;
-    border: 1px solid #005475;
     border-radius: 1rem;
     background: #005475;
     text-decoration: none;
+    font-family:"Google Sans","roboto","helvetica";
     color: #fff;
     font-size: 26px;
     line-height: 1;
@@ -158,11 +162,9 @@ h2 {
     vertical-align: middle;
 }
 
-/*#btnInputFile span,
-#btnChangeFile span:hover{
+#btnInputFile span:hover{
     background: #0079a9;
-    border: 1px solid #0079a9;
-}*/
+}
 
 #upFileWrap.selected #btnInputFile {
     display: none;
