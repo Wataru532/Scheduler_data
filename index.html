@@ -314,6 +314,9 @@
                                 if (result[i]['null'][j].includes(k)) {
                                     result[i]['null'][j] = " " + conversion_dict[k];
                                     break;
+                                } else{
+                                    rep = result[i]['null'][j]
+                                    result[i]['null'][j] = rep.replace('"', '');
                                 }
                             }
                         }
