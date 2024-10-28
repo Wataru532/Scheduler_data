@@ -218,7 +218,7 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        const textDecoder = new TextDecoder('shift_jis'); // エンコーディングを Shift_JIS に指定
+                        const textDecoder = new TextDecoder('utf-8'); // エンコーディングを Shift_JIS に指定
                         const text = textDecoder.decode(e.target.result);
                         const json = csvToJson(text);
                         
