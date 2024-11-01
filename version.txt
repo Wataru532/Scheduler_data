@@ -1,3 +1,6 @@
+v1.1.3 (2024/11/1)
+Updated the conversion system (replacing "体理" and "体育理論" to "体理")
+
 v1.1.2 (2024/10/22)
 Updated the conversion system (replacing '"' to blank)
 
