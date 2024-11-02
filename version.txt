@@ -1,14 +1,18 @@
+v1.2.0 (2024/11/2)
+Revised the function day_process(), and it is now accurate.
+This system will soon be adapted to Scheduler.
+
 v1.1.3 (2024/11/1)
-Updated the conversion system (replacing "体理" and "体育理論" to "体理")
+Updated the conversion system. (replacing "体理" and "体育理論" to "体理")
 
 v1.1.2 (2024/10/22)
-Updated the conversion system (replacing '"' to blank)
+Updated the conversion system. (replacing '"' to blank)
 
 v1.1.1 (2024/10/22)
-Separated css code
+Separated css code.
 
 v1.1.0 (2024/10/21)
-Updated design and useability
+Updated design and useability.
 
 v1.0.0
-First release
+First release.
