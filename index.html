@@ -133,6 +133,7 @@
                 } else{
                     var dates = [31,28,31,30,31,30,31,31,30,31,30,31];
                 }
+
                 //Monday
                 if (date-day+1 > dates[month]){
                     var mon_date = date-day+1 - dates[month];
@@ -140,21 +141,6 @@
                     var mon_date = dates[month-1] + date-day+1;
                 }else{
                     var mon_date = date - day + 1;
-                }
-
-                //Nextweek
-                if (mon_date+7 > dates[month]){
-                    var mon_date_new = mon_date+7-dates[month];
-                    var monthn = month+2;
-                    var monthn2 = month+2;
-                } else {
-                    var mon_date_new = mon_date+7;
-                    var monthn = month+1;
-                    if (mon_date+12 > dates[month]) {
-                        var monthn2 = month+2;
-                    } else {
-                        var monthn2 = month + 1;
-                    }
                 }
 
                 //Friday
@@ -166,31 +152,51 @@
                     var fri_date =  date - day + 5;
                 }
 
-                //Nextweek
-                if (mon_date_new+4 > dates[month]){
-                    var fri_date_new = mon_date_new+4-dates[month];
-                } else{
-                    var fri_date_new = mon_date_new+4;
-                }
-
                 //Month
                 if(date < 10 && mon_date > fri_date){
                     var m_1 = month;
                     var m_2 = month+1;
+                    var m_1_new = m_2;
+                    var m_2_new = m_2;
                 }
                 else if(date > 10 && mon_date > fri_date){
                     var m_1 = month+1;
                     var m_2 = month+2;
+                    var m_1_new = m_2;
+                    var m_2_new = m_2;
                 }
                 else{
                     var m_1 = month+1;
                     var m_2 = m_1;
+                    if(mon_date+7 > dates[month]){
+                        var m_1_new = m_1 + 1;
+                        var m_2_new = m_1 + 1;
+                    } else if(fri_date + 7 > dates[month]){
+                        var m_1_new = m_1;
+                        var m_2_new = m_1 + 1;
+                    } else{
+                        var m_1_new = m_1;
+                        var m_2_new = m_2;
+                    }
                 }
+
+                //Nextweek
+                if(m_1_new < m_2_new) {
+                    mon_date_new = mon_date + 7;
+                    fri_date_new = mon_date + 12 - dates[m_1 - 1];
+                } else if(m_1_new > m_1){
+                    mon_date_new = mon_date + 7 - dates[m_1 - 1];
+                    fri_date_new = mon_date_new + 5;
+                } else {
+                    mon_date_new = mon_date + 7;
+                    fri_date_new = mon_date + 12;
+                }
+            
             
                 res = String(m_1)+String(mon_date);
                 resn = String(monthn) + String(mon_date_new);
                 document.getElementById("tweektxt").innerHTML = `今週（${m_1}/${mon_date}〜${m_2}/${fri_date}）`;
-                document.getElementById("nweektxt").innerHTML = `来週（${monthn}/${mon_date_new}〜${monthn2}/${fri_date_new}）`;
+                document.getElementById("nweektxt").innerHTML = `来週（${m_1_new}/${mon_date_new}〜${m_2_new}/${fri_date_new}）`;
             }
             day_process();
         
