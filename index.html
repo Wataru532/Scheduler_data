@@ -336,8 +336,19 @@
 
                     //addMonday
                     console.log("THIS THING");
-                    console.log(result[0])
-                    console.log(result[0]["null"]);
+                    console.log(result[0]["null"][0]);
+                    
+                    if(!result[0]["null"][0].includes("月")){
+                        result[0]["null"].unshift("月")
+                        let add_n = [];
+                        for(let i = 1; i < 7; i++){
+                            add_n.push(String(i));
+                        }
+                        result[1]["null"].unshift(add_n);
+                        for(let i = 2; i < 21; i++) {
+                            result[i]["null"].unshift(["","","","","",""])
+                        }
+                    }
 
                     return result;
                 }
