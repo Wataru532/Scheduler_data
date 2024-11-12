@@ -339,10 +339,10 @@
                     console.log(result[0]["null"][0]);
                     
                     if(!result[0]["null"][0].includes("月")){
-                        result[0]["null"].unshift("月")
-                        for(let i; i < 6; i++){
-                            result[0]["null"].unshift(" ")
+                        for(let i = 0; i < 6; i++){
+                            result[0]["null"].unshift(" ");
                         }
+                        result[0]["null"].unshift("月");
                         for(let i = 1; i < 7; i++){
                            result[1]["null"].unshift(String(7-i));
                         }
