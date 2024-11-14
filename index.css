@@ -175,6 +175,10 @@ h2 {
 }
 
 .versiontxt{
+    text-decoration: none;
+    color: #494949;
+    position: relative;
+    display: block;
     margin-right: 10px;
 }
 
