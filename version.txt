@@ -1,3 +1,6 @@
+v1.3.1 (2024/11/14)
+Added an url to this page on the web site.
+
 v1.3.0 (2024/11/12)
 Support for automatic adjustment of the timetable for Monday holidays.
 
