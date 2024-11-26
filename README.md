@@ -4,3 +4,8 @@
 ### To see the Updates: visit [version.txt](https://github.com/Wataru532/Scheduler_data/blob/main/version.txt)
 
 # Scheduler
+### The Application created to know the schedules at school more easily.
+### [Visit Site](https://scheduler532.github.io/Schedular/)
+
+# Creater
+### These Scheduler Projects are created by [Scheduler532](https://github.com/Scheduler532/) and [Wataru532](https://github.com/Wataru532/)
