@@ -1,3 +1,6 @@
+v1.3.2 (2024/11/27)
+Applied the Monday shift system to Fridays.
+
 v1.3.1 (2024/11/14)
 Added an url to this page on the web site.
 
