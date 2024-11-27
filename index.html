@@ -321,6 +321,7 @@
                     }
 
                     for (let i = 0; i < result.length; i++){
+                        result[i]['null'].pop();
                         for (let j = 0; j < result[i]["null"].length; j++){
                             for (let k in conversion_dict) {
                                 if (result[i]['null'][j].includes(k)) {
@@ -346,6 +347,23 @@
                         for(let i = 2; i < 21; i++) {
                             for(let j = 0; j < 6; j++){
                                 result[i]["null"].unshift(" ");
+                            }
+                        }
+                    }
+
+                    //addFriday
+                    if(!result[0]["null"][0].includes("金")){
+                        console.log(result[0]["null"])
+                        result[0]["null"].push("金");
+                        for(let i = 0; i < 5; i++){
+                            result[0]["null"].push(" ");
+                        }
+                        for(let i = 1; i < 7; i++){
+                           result[1]["null"].push(String(i));
+                        }
+                        for(let i = 2; i < 21; i++) {
+                            for(let j = 0; j < 6; j++){
+                                result[i]["null"].push(" ");
                             }
                         }
                     }
@@ -460,7 +478,7 @@
             <p id="filename" class="filename"></p>
             <button onclick=upload() class="filebutton" >アップロード</button>
         </span>
-        <a class="versiontxt" align="right" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.txt">v1.3.1</a>
+        <a class="versiontxt" align="right" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.txt">v1.3.2</a>
         <a class="feedbacktxt" href="https://forms.gle/9ExuRPUDyRMcMxxp8" target="_blank" rel="noopener noreferrer">Feedback</a>
     </body>
 </html>
