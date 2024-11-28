@@ -40,6 +40,12 @@ h2 {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: -10px;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+    transition: box-shadow 0.3s ease;
+}
+
+.home-img1:hover {
+    box-shadow: 4px 4px 4px 2px rgb(0 0 0 / 20%);
 }
 
 .filebutton {
@@ -58,12 +64,14 @@ h2 {
     font-weight: bold;
     margin-top: 0px;
     margin-left: 10%;
-    transition: background 0.3s;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 .filebutton:hover{
     background: #0079a9;
     border: 1px solid #0079a9;
+    box-shadow: none;
 }
 
 .radio_s {
@@ -120,24 +128,21 @@ h2 {
     
 }
 
-#csvFile {
+#inputFileWrap {
+    position: relative;
+    display: inline-block;
+}
+
+#inputFileWrap input[type='file'] {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 10;
-    display: block;
+    display: none;
     width: 300px;
     height: 80px;
     opacity: 0;
-}
-
-#csvFile:hover{
-    background: #0079a9;
-}
-
-#inputFileWrap {
-    position: relative;
-    display: inline-flex;
+    cursor: pointer;
 }
 
 #btnInputFile,
@@ -151,12 +156,11 @@ h2 {
 }
 
 
-#btnInputFile span,
-#btnChangeFile span {
+#inputFileWrap label {
     position: relative;
     z-index: 2;
     display: table-cell;
-    width: 200px;
+    width: 300px;
     height: 53px;
     border-radius: 1rem;
     background: #005475;
@@ -167,18 +171,14 @@ h2 {
     line-height: 1;
     font-weight: bold;
     vertical-align: middle;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+    transition: background 0.3s ease, box-shadow 0.3s;
 }
 
-#btnInputFile span:hover{
+#inputFileWrap label:hover{
     background: #0079a9;
-}
-
-#upFileWrap.selected #btnInputFile {
-    display: none;
-}
-
-#upFileWrap.selected #btnChangeFile {
-    display: table;
+    box-shadow: none;
 }
 
 .versiontxt{
@@ -196,6 +196,7 @@ h2 {
     position: relative;
     display: block;
     margin-right: 10px;
+    transition: color 0.3s ease;
 }
 
 .feedbacktxt:hover{
