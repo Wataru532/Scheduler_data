@@ -1,3 +1,6 @@
+v1.3.3 (2024/11/28)
+Added a transition to file-uploading button.
+
 v1.3.2 (2024/11/27)
 Applied the Monday shift system to Fridays.
 
