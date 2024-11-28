@@ -3,6 +3,7 @@
 body {
     margin: 0;
 }
+
 .title{
     margin-left: 0.625rem;
     font-size: 30px;
@@ -11,6 +12,7 @@ body {
     color: #5f6368;
     display: inline;
 }
+
 .text {
     font-family: "Google Sans", "Roboto", Helvetica;
     font-weight: 400;
@@ -18,16 +20,19 @@ body {
     margin-top: -20px;
     font-size: medium;
 }
+
 h2 {
     font-family: "Google Sans", "Roboto", Helvetica;
     font-weight: 1000;
     margin-left: 10px;
     margin-bottom: 30px;
 }
+
 .headsection {
     background-color: #f2f2f2;
     height:auto;
 }
+
 .home-img1 {
     width: 40px;
     height: 40px;
@@ -36,6 +41,7 @@ h2 {
     margin-top: 10px;
     margin-bottom: -10px;
 }
+
 .filebutton {
     position: relative;
     z-index: 2;
@@ -52,6 +58,12 @@ h2 {
     font-weight: bold;
     margin-top: 0px;
     margin-left: 10%;
+    transition: background 0.3s;
+}
+
+.filebutton:hover{
+    background: #0079a9;
+    border: 1px solid #0079a9;
 }
 
 .radio_s {
@@ -78,11 +90,6 @@ h2 {
     font-family: "Google Sans", "Roboto", Helvetica;
     font-weight: bold;
     font-size: large;
-}
-
-.filebutton:hover{
-    background: #0079a9;
-    border: 1px solid #0079a9;
 }
 
 #inputFile {
