@@ -7,13 +7,13 @@
         <title>Schedulerファイルアップロード</title>
         <link rel="icon" type="image/x-icon" href="https://wataru532.github.io/Scheduler_data/artworks/favicon.ico">
         <link rel="apple-touch-icon" sizes="180x180" href="https://wataru532.github.io/Scheduler_data/artworks/apple-touch-icon-180x180.png">
-        <link rel="stylesheet" href="index.css" type="text/css">
+        <link rel="stylesheet" href="./index.css" type="text/css">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <script charset="utf-8" type="module">
             const repoOwner = 'Wataru532';
             const repoName = 'Scheduler_data';
-            const branch = 'main'; // または 'master'
+            const branch = 'main'; // または 'master'aaa
             var sha_value;
             // ドラッグ&ドロップエリアの取得
             var fileArea = document.getElementById('dropArea');
@@ -459,8 +459,7 @@
                 <!-- 通常のinput[type=file] -->
                 <div id="inputFileWrap">
                     <input type="file" name="uploadcsvFile" id="csvFile" accept=".csv">
-                    <div id="btnInputFile"><span>ファイルを選択する</span></div>
-                    <div id="btnChangeFile"><span>ファイルを変更する</span></div>
+                    <div class="btnInputFile"><label for="csvFile">ファイルを選択する</label>
                 </div>
             </div>
         </div>
@@ -478,7 +477,7 @@
             <p id="filename" class="filename"></p>
             <button onclick=upload() class="filebutton" >アップロード</button>
         </span>
-        <a class="versiontxt" align="right" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.txt">v1.3.3</a>
+        <a class="versiontxt" align="right" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.txt">v1.3.4</a>
         <a class="feedbacktxt" href="https://forms.gle/9ExuRPUDyRMcMxxp8" target="_blank" rel="noopener noreferrer">Feedback</a>
     </body>
 </html>
