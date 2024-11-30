@@ -1,3 +1,6 @@
+### v1.3.5 (2024/11/30)
+Changed the update log file from `version.txt` to `[version.md](https://github.com/Wataru532/Scheduler_data/blob/main/version.md)`, and for that, changed links.
+
 ### v1.3.4 (2024/11/28)
 Added transitions to file-selecting button, home-img, and feedback button.
 This includes revisions of html and css structures.
