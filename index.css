@@ -66,6 +66,7 @@ h2 {
     margin-left: 10%;
     box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
     transition: background 0.3s, box-shadow 0.3s;
+    cursor: pointer;
 }
 
 .filebutton:hover{
