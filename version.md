@@ -1,3 +1,6 @@
+### v1.3.6 (2024/12/4)
+Changed cursor on hover to the upload button.
+
 ### v1.3.5 (2024/11/30)
 Changed the update log file from `version.txt` to `version.md`, and for that, changed links.
 
