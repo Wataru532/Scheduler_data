@@ -1,3 +1,8 @@
+# Scheduler Data Version Log
+
+### v1.4.0 (2024/12/6)
+Supports auto-adjustment of timetable even if there are missing days.
+
 ### v1.3.6 (2024/12/4)
 Changed cursor on hover to the upload button.
 
