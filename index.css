@@ -182,24 +182,36 @@ h2 {
     box-shadow: none;
 }
 
+.txts {
+    align-items: right;
+    text-align: right;
+}
+
 .versiontxt{
+    text-align: right;
     text-decoration: none;
     color: #494949;
     position: relative;
-    display: block;
-    margin-right: 10px;
+    display: inline-block;
+    margin-right: 5px;
+    padding-right: 0.4em;
 }
 
 .feedbacktxt{
     text-align: right;
     text-decoration: none;
     color: #494949;
+    background: none;
+    border-radius: 0.5em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    padding:0.5em;
     position: relative;
-    display: block;
-    margin-right: 10px;
-    transition: color 0.3s ease;
+    display: inline;
+    margin-right: 5px;
+    transition: background 0.3s ease;
 }
 
 .feedbacktxt:hover{
-    color: #435f89;
+    background: #0054751f;
 }
