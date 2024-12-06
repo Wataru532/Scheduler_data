@@ -1,5 +1,8 @@
 # Scheduler Data Version Log
 
+### v1.4.1 (2024/12/6)
+Fixed the button placing (version, feedback)
+
 ### v1.4.0 (2024/12/6)
 Supports auto-adjustment of timetable even if there are missing days.
 
