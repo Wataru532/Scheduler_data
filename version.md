@@ -1,5 +1,8 @@
 # Scheduler Data Version Log
 
+### v1.4.2 (2024/12/9)
+Revised the design. (Placed the "ここにファイルをドロップしてください" text right in the center.)
+
 ### v1.4.1 (2024/12/6)
 Fixed the button placing (version, feedback)
 
