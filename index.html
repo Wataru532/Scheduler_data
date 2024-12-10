@@ -125,6 +125,7 @@
             const day = now.getDay();
             var res;
             var resn;
+            var resnxtnxt;
         
 
             function day_process(){
@@ -133,7 +134,8 @@
                 } else{
                     var dates = [31,28,31,30,31,30,31,31,30,31,30,31];
                 }
-
+                
+                //This week
                 //Monday
                 if (date-day+1 > dates[month]){
                     var mon_date = date-day+1 - dates[month];
@@ -153,12 +155,12 @@
                 }
 
                 //Month
-                if(date < 10 && mon_date > fri_date){
-                    var m_1 = month;
-                    var m_2 = month+1;
-                    var m_1_new = m_2;
-                    var m_2_new = m_2;
-                }
+                if(date < 10 && mon_date > fri_date){  
+                    var m_1 = month;    //m_1 as thisweek's monday's month
+                    var m_2 = month+1;  //m_2 as thisweek's friday's month
+                    var m_1_new = m_2;  //m_1_new as nextweek's monday's month
+                    var m_2_new = m_2;  //m_2_new as nextweek's friday's month
+                } 
                 else if(date > 10 && mon_date > fri_date){
                     var m_1 = month+1;
                     var m_2 = month+2;
@@ -191,10 +193,31 @@
                     var mon_date_new = mon_date + 7;
                     var fri_date_new = mon_date + 11;
                 }
-            
+
+                //Next next week
+                //Month
+                var m_1_nextnext;
+                if (m_1_new > m_1 || (m_1_new === m_1 && m_2_new > m_1_new)) { //if month: (thisweek != nextweek), then month: nextnextweek = nextweek
+                    m_1_nextnext = month + 2; //needs only for monday's month
+                } else {
+                    if (mon_date_new + 7 > dates[m_1_new-1]) {
+                        m_1_nextnext = month + 2;
+                    } else {
+                        m_1_nextnext = month + 1;
+                    }
+                }
+                
+                //Monday
+                var mon_date_nextnext;
+                if (m_1_nextnext === m_1 || m_1_nextnext === m_1_new) {
+                    mon_date_nextnext = mon_date_new + 7;
+                } else {
+                    mon_date_nextnext = mon_date_new + 7 - dates[m_1_new-1];
+                }
             
                 res = String(m_1)+String(mon_date);
                 resn = String(m_1_new) + String(mon_date_new);
+                resnxtnxt = String(m_1_nextnext) + String(mon_date_nextnext);
                 document.getElementById("tweektxt").innerHTML = `今週（${m_1}/${mon_date}〜${m_2}/${fri_date}）`;
                 document.getElementById("nweektxt").innerHTML = `来週（${m_1_new}/${mon_date_new}〜${m_2_new}/${fri_date_new}）`;
             }
@@ -211,7 +234,8 @@
                 if(document.week.weekselect[0].checked){
                     flag = true;
                     var date_value = document.week.weekselect[0].value;
-                } else if (document.week.weekselect[1].checked){
+                } 
+                else if (document.week.weekselect[1].checked){
                     flag = true;
                     var date_value = document.week.weekselect[1].value;
                 }
@@ -227,11 +251,7 @@
                         const textDecoder = new TextDecoder('shift_jis'); // エンコーディングを Shift_JIS に指定
                         const text = textDecoder.decode(e.target.result);
                         const json = csvToJson(text);
-                        
-                        // JSON変換結果を表示
-                        const output_file = JSON.stringify(json, null, 2);
-                        console.log(output_file);
-                        uploadFile(output_file);
+                        splitFile(json);
                     };
                     reader.readAsArrayBuffer(file); // readAsArrayBufferに変更
                 }
@@ -340,7 +360,7 @@
                     var dayCheck = result[0]["null"];
                     var checkedFlag = [];
                     var isIN = [];
-                    const days = ["月","火","水","木","金"]
+                    const days = ["月","火","水","木","金"];
 
                     for(let i = 0; i < dayCheck.length; i++){
                         for(let j = 0; j < 5; j++){
@@ -351,18 +371,23 @@
                         }
                     }
                     
-                    if(!isIN.includes("金")) addFriday(); 
-                    
                     let cnt = 0;
                     function checkDay(day,place) {
                         if(checkedFlag[place][0]!=day){
-                            checkedFlag.unshift([day,0]);
-                            addDay(day,checkedFlag[place+1][1]);
+                            checkedFlag.splice(place,0,[day,place*6]);
+                            checkedFlag = checkedFlag.map((d,index) => 
+                                index > place ? [d[0],d[1] + 6]: d
+                            );
+                            addDay(day,checkedFlag[place][1]);
                         } 
                         if(place+1 < checkedFlag.length){
                             cnt++;
                             if(cnt > 4) cnt = 0;
                             checkDay(days[cnt],place+1);
+                        } else {
+                            if (days[cnt+1] === "金") {
+                                addFriday();
+                            }
                         }
                     }
 
@@ -392,23 +417,50 @@
                     }
 
                     checkDay("月",0);
-                    
                     return result;
                 }
 
+                function splitFile(inputjson) {
+                    var filedate;
+                    var output = [];
+                    if (date_value === "thisweek") filedate = res;
+                    else if (date_value === "nextweek") filedate = resn;
+                    output.push([JSON.stringify(inputjson, null, 2), filedate]);
 
-                function uploadFile(inputfile) {
-                    const file = new Blob([inputfile], { type: 'application/json'});
+                    if (inputjson[0]["null"].length !== 30) {
+                        if (date_value === "thisweek") filedate = resn;
+                        else if (date_value === "nextweek") filedate = resnxtnxt;
+                        const splited = []
+                        for (let i=0; i < 20; i++) {
+                            splited.push({"class": i});
+                        }
+                        
+                        for(let i = 0; i < 20; i++) {
+                            let tentative = [];
+                            for(let j = 30; j < 60; j++) {
+                                tentative.push(inputjson[i]['null'][j]);
+                            }
+                            splited[i]['null'] = tentative;
+                        }
+
+                        output.push([JSON.stringify(splited, null, 2), filedate])
+                    }
+
+                    uploadFile(output[0], 0, output);
+                }
+
+
+                function uploadFile(input_arr, num, output) {
                     const repo = 'Scheduler_data'; //your-repo-name
                     const owner = 'Wataru532'; //your-github-username
                     const branch = 'main';
-                    if(date_value == "thisweek") {
-                        var filePath = `scheduler_data${res}.json`;
-                    }else if(date_value == "nextweek") {
-                        var filePath = `scheduler_data${resn}.json`; 
-                    }
+                    const inputfile = input_arr[0];
+                    const filedate = input_arr[1];
+                    const file = new Blob([inputfile], { type: 'application/json'});
+                    const filePath = `scheduler_data${filedate}.json`;
                     console.log(filePath);
-
+                    console.log(inputfile);
+                    
                     const reader = new FileReader();
                     reader.onload = async function(event) {
                         const content = btoa(event.target.result);
@@ -431,7 +483,7 @@
                         }
 
                         const method = filesha ? 'PUT' : 'POST';
-                        const message = filesha ? 'Update file' : 'Create file';
+                        const message = filesha ? `Update ${filePath}` : `Create ${filePath}`;
 
                         try {
                             const response = await fetch(url, {
@@ -457,11 +509,16 @@
                                 const error = await response.json();
                                 alert(`Error: ${error.message}`);
                             } 
+
+                            //if the next week's data exists
+                            if (num+1 != output.length){
+                                uploadFile(output[num+1], num+1, output);
+                            }
                         }catch (error) {
                             console.error('Error uploading file:', error);
                         }
                     };
-                    reader.readAsBinaryString(file);
+                    reader.readAsBinaryString(file); 
                 }
             }
             
@@ -503,7 +560,7 @@
             <button onclick=upload() class="filebutton" >アップロード</button>
         </span>
         <div class="txts">
-            <a class="versiontxt" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.md">v1.4.2</a><br>
+            <a class="versiontxt" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.md">v1.5.0</a><br>
             <a class="feedbacktxt" href="https://forms.gle/9ExuRPUDyRMcMxxp8" target="_blank" rel="noopener noreferrer">Feedback</a>
         </div>
     </body>
