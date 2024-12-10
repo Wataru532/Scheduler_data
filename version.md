@@ -1,5 +1,9 @@
 # Scheduler Data Version Log
 
+### v1.5.0 (2024/12/10)
+Supports auto-adjustment of timetable even if there are missing days, whichever the day is.
+New conversion system: supports two-weeks-long data conversion.
+
 ### v1.4.2 (2024/12/9)
 Revised the design. (Placed the "ここにファイルをドロップしてください" text right in the center.)
 
