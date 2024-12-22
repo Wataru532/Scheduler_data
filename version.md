@@ -1,5 +1,8 @@
 # Scheduler Data Version Log
 
+### v1.5.1 (2024/12/22)
+Fixed Problem: months not shown correctly when a week is spanning the years.
+
 ### v1.5.0 (2024/12/10)
 Supports auto-adjustment of timetable even if there are missing days, whichever the day is.
 New conversion system: supports two-weeks-long data conversion.
