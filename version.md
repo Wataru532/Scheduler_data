@@ -1,5 +1,8 @@
 # Scheduler Data Version Log
 
+### v1.5.2 (2024/12/23)
+Updated the conversion system. (Adding some new subjects: 自α, 自β)
+
 ### v1.5.1 (2024/12/22)
 Fixed Problem: months not shown correctly when a week is spanning the years.
 
