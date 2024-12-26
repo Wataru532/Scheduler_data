@@ -5,8 +5,9 @@
     },
     "ad": {
         "display": true,
+        "title": "Test",
         "content": "This is a test",
-        "url_message": "Click Me!",
-        "url": "https://google.com"
+        "url": "https://google.com",
+        "url_message": "Click Me!"
     }
 }
