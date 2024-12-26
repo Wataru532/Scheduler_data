@@ -6,6 +6,7 @@
     "ad": {
         "display": true,
         "content": "This is a test",
-        "link": "https://google.com"
+        "url_message": "Click Me!",
+        "url": "https://google.com"
     }
 }
