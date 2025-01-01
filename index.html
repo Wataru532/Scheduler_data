@@ -140,7 +140,7 @@
                 if (date-day+1 > dates[month]){
                     var mon_date = date-day+1 - dates[month];
                 } else if (date-day+1 <= 0){
-                    var mon_date = dates[month-1] + date-day+1;
+                    var mon_date = dates[month === 0 ? 11 : month-1] + date-day+1;
                 }else{
                     var mon_date = date - day + 1;
                 }
@@ -149,7 +149,7 @@
                 if (date-day+5 > dates[month]){
                     var fri_date = date-day+5-dates[month];
                 } else if (date-day+5 <= 0){
-                    var fri_date =  dates[month-1] + date-day+5;
+                    var fri_date =  dates[month === 0 ? 11 : month-1] + date-day+5;
                 }else{
                     var fri_date =  date - day + 5;
                 }
@@ -183,9 +183,13 @@
                 }
 
                 if(m_1 > 12) m_1 -= 12;
+                if(m_1 === 0) m_1 = 12;
                 if(m_2 > 12) m_2 -= 12;
+                if(m_2 === 0) m_2 = 12;
                 if(m_1_new > 12) m_1_new -= 12;
+                if(m_1_new === 0) m_1_new = 12;
                 if(m_2_new > 12) m_2_new -= 12;
+                if(m_2_new === 0) m_2_new = 12;
 
                 //Nextweek
                 if(m_1_new != m_2_new) {
@@ -568,7 +572,7 @@
             <button onclick=upload() class="filebutton" >アップロード</button>
         </span>
         <div class="txts">
-            <a class="versiontxt" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.md">v1.5.2</a><br>
+            <a class="versiontxt" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.md">v1.5.3</a><br>
             <a class="feedbacktxt" href="https://forms.gle/9ExuRPUDyRMcMxxp8" target="_blank" rel="noopener noreferrer">Feedback</a>
         </div>
     </body>
