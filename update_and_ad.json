@@ -4,7 +4,7 @@
         "content": "新しいバージョンが利用可能です。アップデートを適用するためにSchedulerを再起動してください。"
     },
     "ad": {
-        "display": false,
+        "display": true,
         "title": "英語発音講座",
         "content": "経験豊富な講師が皆さんの発音の悩みを解決！",
         "url": "https://sites.google.com/view/yamatoenclub/イベント/英語発音講座",
