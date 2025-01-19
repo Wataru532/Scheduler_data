@@ -317,6 +317,10 @@
                         "理数生":"理生",
                         "理数化":"理化",
                         "化":"化学",
+                        "自科α":"自α",
+                        "自科β":"自β",
+                        "自然科学α":"自α",
+                        "自然科学β":"自β",
                         "自然科α":"自α",
                         "自然科β":"自β",
                         "自然科":"自科",
@@ -337,6 +341,7 @@
                         "  ":" "
                     }
 
+                    sessionStorage.setItem('original_csv',JSON.stringify(linestest)) //自然科学の分類を確認する用 Upload()でgithubにあげてもらう
                     for (let i = 1; i < linestest.length; i++){
                         const obj = {};
                         const currentline = linestest[i].split(/,/);
@@ -428,6 +433,7 @@
                         }
                     }
 
+                    console.log(result)
                     checkDay("月",0);
                     return result;
                 }
@@ -457,8 +463,38 @@
 
                         output.push([JSON.stringify(splited, null, 2), filedate])
                     }
+                    console.log(output)
+                    //uploadFile(output[0], 0, output);
+                    uploadCSV()
+                    .then(() => console.log('File uploaded successfully.'))
+                    .catch((error) => console.error('Error:', error));
+                }
 
-                    uploadFile(output[0], 0, output);
+                const uploadCSV = async () => {
+                    const content = sessionStorage.getItem('original_csv');
+                    const apiUrl = `https://api.github.com/repos/Wataru532/Scheduler_data/contents/testcsv.csv`;
+                    const encodedContent = btoa(unescape(encodeURIComponent(content))); // ファイルの内容をBase64にエンコード
+
+                    const response = await fetch(apiUrl, {
+                        method: 'PUT',
+                        headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                        message: `Add testcsv.csv`, // コミットメッセージ
+                        content: encodedContent
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.json();
+                        console.error('Error uploading file:', error);
+                        throw new Error(`Failed to upload file: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('File uploaded successfully:', data);
                 }
 
 
@@ -572,7 +608,7 @@
             <button onclick=upload() class="filebutton" >アップロード</button>
         </span>
         <div class="txts">
-            <a class="versiontxt" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.md">v1.5.3</a><br>
+            <a class="versiontxt" href="https://github.com/Wataru532/Scheduler_data/blob/main/version.md">v1.5.4</a><br>
             <a class="feedbacktxt" href="https://forms.gle/9ExuRPUDyRMcMxxp8" target="_blank" rel="noopener noreferrer">Feedback</a>
         </div>
     </body>

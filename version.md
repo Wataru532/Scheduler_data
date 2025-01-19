@@ -1,5 +1,8 @@
 # Scheduler Data Version Log
 
+### v1.5.4 (2025/1/19)
+In order to know the original CSV file, added UploadCSV function.
+
 ### v1.5.3 (2025/1/1)
 Fixed Problem: months not shown correctly when a week is spanning the years. (when "this week" is in January)
 
@@ -10,7 +13,7 @@ Updated the conversion system. (Adding some new subjects: 自α, 自β)
 Fixed Problem: months not shown correctly when a week is spanning the years.
 
 ### v1.5.0 (2024/12/10)
-Supports auto-adjustment of timetable even if there are missing days, whichever the day is.
+Supports auto-adjustment of timetable even if there are missing days, whichever the day is. <br>
 New conversion system: supports two-weeks-long data conversion.
 
 ### v1.4.2 (2024/12/9)
@@ -29,7 +32,7 @@ Changed the cursor when hovering over the upload button.
 Changed the update log file from `version.txt` to `version.md`, and for that, changed links.
 
 ### v1.3.4 (2024/11/28)
-Added transitions to file-selecting button, home-img, and feedback button.
+Added transitions to file-selecting button, home-img, and feedback button.<br>
 This includes revisions of html and css structures.
 
 ### v1.3.3 (2024/11/28)
@@ -48,7 +51,7 @@ Support for automatic adjustment of the timetable for Monday holidays.
 Updated the conversion system. (adding some new subjects)
 
 ### v1.2.0 (2024/11/2)
-Revised the `function day_process()`, and it is now accurate.
+Revised the `function day_process()`, and it is now accurate.<br>
 This system will soon be adapted to Scheduler.
 
 ### v1.1.3 (2024/11/1)
