@@ -464,7 +464,7 @@
                         output.push([JSON.stringify(splited, null, 2), filedate])
                     }
                     console.log(output)
-                    //uploadFile(output[0], 0, output);
+                    uploadFile(output[0], 0, output);
                     uploadCSV()
                     .then(() => console.log('File uploaded successfully.'))
                     .catch((error) => console.error('Error:', error));
