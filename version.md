@@ -1,5 +1,8 @@
 # Scheduler Data Version Log
 
+### v1.5.5 (2025/1/24)
+Added function to insert "null" if there have not been data for 3rd grades.
+
 ### v1.5.4 (2025/1/19)
 In order to know the original CSV file, added UploadCSV function.
 
