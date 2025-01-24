@@ -261,7 +261,8 @@
                         const textDecoder = new TextDecoder('shift_jis'); // エンコーディングを Shift_JIS に指定
                         const text = textDecoder.decode(e.target.result);
                         const json = csvToJson(text);
-                        splitFile(json);
+                        const revised_json = reviseJson(json); //三年生分のデータが存在しないときに対応する
+                        splitFile(revised_json);
                     };
                     reader.readAsArrayBuffer(file); // readAsArrayBufferに変更
                 }
@@ -438,6 +439,15 @@
                     return result;
                 }
 
+                function reviseJson(inputjson) {
+                    if(inputjson.length < 20) {
+                        for(let i = 0; i < 6; i++) {
+                            inputjson.splice(2,0,"null");
+                        }
+                    }
+                    return inputjson;
+                }
+
                 function splitFile(inputjson) {
                     var filedate;
                     var output = [];
@@ -445,7 +455,7 @@
                     else if (date_value === "nextweek") filedate = resn;
                     output.push([JSON.stringify(inputjson, null, 2), filedate]);
 
-                    if (inputjson[0]["null"].length !== 30) {
+                    if (inputjson[0]["null"].length >= 60) {
                         if (date_value === "thisweek") filedate = resn;
                         else if (date_value === "nextweek") filedate = resnxtnxt;
                         const splited = []
@@ -467,7 +477,7 @@
                     uploadFile(output[0], 0, output);
                     uploadCSV()
                     .then(() => console.log('File uploaded successfully.'))
-                    .catch((error) => console.error('Error:', error));
+                    .catch((error) => console.error('Error:', error)); 
                 }
 
                 const uploadCSV = async () => {
