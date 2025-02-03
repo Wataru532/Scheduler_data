@@ -1,7 +1,7 @@
 {
     "update": {
-        "version": "3.0.0",
-        "content": "Scheduler v3.0.0 が利用可能です。アップデートを適用するためにSchedulerを再起動してください。"
+        "version": "3.0.1",
+        "content": "Scheduler v3.0.1 が利用可能です。アップデートを適用するためにSchedulerを再起動してください。"
     },
     "ad": {
         "display": false,
