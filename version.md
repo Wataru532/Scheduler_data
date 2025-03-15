@@ -1,5 +1,9 @@
 # Scheduler Data Version Log
 
+### v1.6.1 (2025/3/15)
+Migrated the system to Vite environment. <br>
+Revised the icon.
+
 ### v1.6.0 (2025/2/9)
 Fixed a problem which occurres when there haven't been data for 3rd grades and there have been gap in a week.<br>
 This app is created with React from this version.
