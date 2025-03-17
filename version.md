@@ -1,5 +1,8 @@
 # Scheduler Data Version Log
 
+### v1.6.2 (2025/3/17)
+Revised favicon to be transparent.
+
 ### v1.6.1 (2025/3/15)
 Migrated the system to Vite environment. <br>
 Revised the icon.
