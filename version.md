@@ -1,87 +1,90 @@
 # Scheduler Data Version Log
 
+### v1.6.3 (2025/4/13)
+金曜から金曜までの時間割データにおいて、なぜか2週目の月と火が消滅する問題を修正。根本的な原因の解明には至っていない。
+
 ### v1.6.2 (2025/3/17)
-Revised favicon to be transparent.
+ファビコンの背景が透過するように変更。
 
 ### v1.6.1 (2025/3/15)
-Migrated the system to Vite environment. <br>
-Revised the icon.
+システムをVite環境に移行。 <br>
+アイコンを刷新。
 
 ### v1.6.0 (2025/2/9)
-Fixed a problem which occurres when there haven't been data for 3rd grades and there have been gap in a week.<br>
-This app is created with React from this version.
+3年生の時間割データが存在せず、かつ週の中に穴あきがある場合に発生する問題を修正。<br>
+このバージョンからReact環境に移行。
 
 ### v1.5.6 (2025/2/1)
-Fixed a problem that the month doesn't shown correctly.
+月が正しく表示されない問題を修正。
 
 ### v1.5.5 (2025/1/24)
-Added function to insert "null" if there have not been data for 3rd grades.
+3年生のデータがない場合、"null"を挿入する関数を追加。
 
 ### v1.5.4 (2025/1/19)
-In order to know the original CSV file, added UploadCSV function.
+元のCSVデータを知るために、UploadCSV関数を追加。
 
 ### v1.5.3 (2025/1/1)
-Fixed Problem: months not shown correctly when a week is spanning the years. (when "this week" is in January)
+週が年を跨いでいる時、正しく表示されない問題を修正。("this week"が一月にある時)
 
 ### v1.5.2 (2024/12/23)
-Updated the conversion system. (Adding some new subjects: 自α, 自β)
+変換システムを更新。 (幾らかの新しい教科を追加: 自α, 自β)
 
 ### v1.5.1 (2024/12/22)
-Fixed Problem: months not shown correctly when a week is spanning the years.
+週が年を跨いでいる時、正しく表示されない問題を修正。
 
 ### v1.5.0 (2024/12/10)
-Supports auto-adjustment of timetable even if there are missing days, whichever the day is. <br>
-New conversion system: supports two-weeks-long data conversion.
+週の中の穴あきを調整する仕組みを追加。 <br>
+2週間分のデータが１ファイルで送られてきても対応できるように。
 
 ### v1.4.2 (2024/12/9)
-Revised the design. (Placed the "ここにファイルをドロップしてください" text right in the center.)
+デザインを変更 (中央に "ここにファイルをドロップしてください" を配置。)
 
 ### v1.4.1 (2024/12/6)
-Fixed the button placing (version, feedback)
+ボタンの配置を修正。 (version, feedback)
 
 ### v1.4.0 (2024/12/6)
-Supports auto-adjustment of timetable even if there are missing days.
+週の穴あきに対応。
 
 ### v1.3.6 (2024/12/4)
-Changed the cursor when hovering over the upload button.
+アップロードボタンの上のカーソルの形を変更。
 
 ### v1.3.5 (2024/11/30)
-Changed the update log file from `version.txt` to `version.md`, and for that, changed links.
+アップデートログのファイルを `version.txt` から `version.md` に変更。それに伴い、リンクも変更。
 
 ### v1.3.4 (2024/11/28)
-Added transitions to file-selecting button, home-img, and feedback button.<br>
-This includes revisions of html and css structures.
+ファイル選択ボタン、home-img、フィードバックボタンにアニメーションを追加。<br>
+HTMLとCSS構造の変化を含む。
 
 ### v1.3.3 (2024/11/28)
-Added a transition to file-uploading button.
+ファイルアップロードボタンにアニメーションを追加。
 
 ### v1.3.2 (2024/11/27)
-Applied the Monday shift system to Fridays.
+月曜の調整システムを金曜にも応用。
 
 ### v1.3.1 (2024/11/14)
-Added an url to this page on the web site.
+このページへのリンクをWebサイト上に追加。
 
 ### v1.3.0 (2024/11/12)
-Support for automatic adjustment of the timetable for Monday holidays.
+月曜日が休みである時に時間割データを自動的に調整するシステムを追加。
 
 ### v1.2.1 (2024/11/10)
-Updated the conversion system. (adding some new subjects)
+変換システムを更新。 (幾らかの新しい科目を追加。)
 
 ### v1.2.0 (2024/11/2)
-Revised the `function day_process()`, and it is now accurate.<br>
-This system will soon be adapted to Scheduler.
+`function day_process()`を刷新し、より正確に。<br>
+Scheudulerにも同様のアップデート。
 
 ### v1.1.3 (2024/11/1)
-Updated the conversion system. (replacing "体理" and "体育理論" to "体理")
+変換システムを更新。 ("体理" と "体育理論" を "体理" に置換。)
 
 ### v1.1.2 (2024/10/22)
-Updated the conversion system. (replacing '"' to blank)
+変換システムを更新。 ('"' を空白に変換。)
 
 ### v1.1.1 (2024/10/22)
-Separated css code.
+CSSコードを別ファイルに移動。
 
 ### v1.1.0 (2024/10/21)
-Updated design and useability.
+デザインと操作性を向上。
 
 ### v1.0.0
-First release.
+ファーストリリース。
