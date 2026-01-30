@@ -10,4 +10,4 @@ The Application created to know the schedules at school more easily.
 # Creators
 These Scheduler Projects are created by [Scheduler532](https://github.com/Scheduler532/) and [Wataru532](https://github.com/Wataru532/)
 
-© 2024-2025 Scheduler532 and Wataru532
+© 2024-2026 Scheduler532 and Wataru532
